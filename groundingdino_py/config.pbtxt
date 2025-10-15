@@ -1,0 +1,19 @@
+name: "groundingdino_py"
+backend: "python"
+max_batch_size: 0
+
+input [
+  { name: "image_bytes",  data_type: TYPE_STRING, dims: [1] },
+  { name: "text_prompt",  data_type: TYPE_STRING, dims: [1] },
+  { name: "box_threshold",  data_type: TYPE_FP32, dims: [1], optional: true },
+  { name: "text_threshold", data_type: TYPE_FP32, dims: [1], optional: true }
+]
+
+output [
+  { name: "boxes",           data_type: TYPE_FP32,  dims: [-1, 4] },
+  { name: "logits",          data_type: TYPE_FP32,  dims: [-1] },
+  { name: "phrases",         data_type: TYPE_STRING, dims: [-1] },
+  { name: "annotated_image", data_type: TYPE_STRING, dims: [1] }
+]
+
+instance_group [ { kind: KIND_GPU } ]
